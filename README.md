@@ -48,7 +48,10 @@ This software is an open source starting point for WaveRNN-based speech synthesi
    ./dump_data -test test_input.s16 test_features.f32
    ./test_lpcnet test_features.f32 test.s16
    ```
- 
+    finally get wav by:
+      ```
+        sox -t sw -r 16000 -c 1 test.s16 -t wav test.wav
+      ```
 # Speech Material for Training 
 
 Suitable training material can be obtained from the [McGill University Telecommunications & Signal Processing Laboratory](http://www-mmsp.ece.mcgill.ca/Documents/Data/).  Download the ISO and extract the 16k-LP7 directory, the src/concat.sh script can be used to generate a headerless file of training samples.

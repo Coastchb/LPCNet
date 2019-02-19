@@ -1,0 +1,8 @@
+bin/
+data
+data/
+log/
+model/
+src/*.o
+src/nnet_data.*
+src/__pycache__/

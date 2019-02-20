@@ -68,11 +68,11 @@ int main(int argc, char **argv) {
         int p = 0;
         while(tp != NULL) {
             double d = atof(tp);
-            printf("%f ", d);
+            //printf("%f ", d);
             in_features[p++] = d;
             tp = strsep(&b, " ");
         }
-        printf("\n");
+        //printf("\n");
         if (feof(fin)) break;
         RNN_COPY(features, in_features, NB_FEATURES);
         RNN_CLEAR(&features[18], 18);

@@ -91,15 +91,15 @@ int main(int argc, char **argv) {
 
   DenoiseState *st = rnnoise_create();
 
-  FILE * cep_fh = fopen(cep_file, "r");
-
+  FILE * fin = fopen(cep_file, "r");
+  FILE * fout = fopen(lpc_file, "w");
   char line[BUF_SIZE];
   memset(line,0,BUF_SIZE);
 
   float cep_features[CEP_PITCH_DIM];
   int line_count = 0;
-  while(!feof(cep_fh)) {
-    fgets(line,BUF_SIZE,cep_fh);
+  while(!feof(fin)) {
+    fgets(line,BUF_SIZE,fin);
     char * b;
     b = line;
     char * tp = strsep(&b, " ");
@@ -114,11 +114,13 @@ int main(int argc, char **argv) {
     //printf("\n");
 
     float g = lpc_from_cepstrum(st->lpc, cep_features);
-    for(int k = 0;k < LPC_ORDER; k++) {
-      printf("%f ", st->lpc[k]);
-    }
-    printf("\n");
-  }
 
+    for (int j = 0; j < (LPC_ORDER-1); j++) {
+      fprintf(fout, "%f ", st->lpc[j]);
+    }
+    fprintf(fout, "%f\n", st->lpc[LPC_ORDER-1]);
+  }
+  fclose(fin);
+  fclose(fout);
   rnnoise_destroy(st);
 }

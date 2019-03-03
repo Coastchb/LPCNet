@@ -26,6 +26,10 @@
    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 /* No AVX2/FMA support */
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifndef LPCNET_TEST
 static float celt_exp2(float x)
 {
@@ -112,8 +116,8 @@ static void sgemv_accum16(float *out, const float *weights, int rows, int cols, 
    {
       for (j=0;j<cols;j++)
       {
-         const float * restrict w;
-         float * restrict y;
+         const float * w; //restrict w;
+         float * y; //restrict y;
          float xj;
          w = &weights[j*col_stride + i];
          xj = x[j];
@@ -147,7 +151,7 @@ static void sparse_sgemv_accum16(float *out, const float *w, int rows, const int
       cols = *idx++;
       for (j=0;j<cols;j++)
       {
-         float * restrict y;
+         float * y; //restrict y;
          float xj;
          xj = x[*idx++];
          y = &out[i];
@@ -171,3 +175,7 @@ static void sparse_sgemv_accum16(float *out, const float *w, int rows, const int
       }
    }
 }
+
+#ifdef __cplusplus
+}
+#endif

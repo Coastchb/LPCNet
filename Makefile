@@ -50,12 +50,15 @@ bin/test_lpcnet_t: $(test_lpcnet_t_objs)
 
 -include $test_lpcnet_t_deps(_deps)
 
-test_lpcnet_objs := src/test_lpcnet.o src/lpcnet.o src/nnet.o src/nnet_data.o src/freq.o src/kiss_fft.o src/pitch.o src/celt_lpc.o
+test_lpcnet_objs := src/lpcnet.o src/nnet.o src/nnet_data.o src/freq.o src/kiss_fft.o src/pitch.o src/celt_lpc.o
 test_lpcnet_deps := $(test_lpcnet_objs:.o=.d)
 bin/test_lpcnet: $(test_lpcnet_objs)
 	gcc -o $@ $(CFLAGS) $(test_lpcnet_objs) -lm
 
 -include $(test_lpcnet_deps)
+
+lib:
+	g++ -fPIC -shared -o liblpc.so src/lpcnet.c src/nnet.c src/nnet_data.c src/freq.c src/kiss_fft.c src/pitch.c src/celt_lpc.c -lm -Wall -W -Wextra -Wno-unused-function -O3 -g -mavx2 -mfma
 
 test_vec_objs := src/test_vec.o
 test_vec_deps := $(test_vec_objs:.o=.d)
